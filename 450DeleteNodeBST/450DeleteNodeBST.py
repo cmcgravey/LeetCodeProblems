@@ -12,14 +12,39 @@ class Solution(object):
             self.printTree(root.right)
 
     def deleteNode(self, root, key):
+        def leftmostOfRight(root):
+            if (not root.left):
+                return root.val
+            else:
+                val = leftmostOfRight(root.left)
+                return val
+        
+        def rightmostOfLeft(root):
+            if (not root.right):
+                return root.val
+            else: 
+                val = rightmostOfLeft(root.right)
+                return val
+
         if root is None: 
             return root
         if key < root.val:
             root.left  = self.deleteNode(root.left, key)
+            return root
         if key > root.val:
             root.right = self.deleteNode(root.right, key)
-        else:
             return root
+        else:
+            if (not root.left and not root.right):
+                return None
+            if (root.left and not root.right):
+                root.val = rightmostOfLeft(root.left)
+                root.left = self.deleteNode(root.left, root.val)
+            if (root.right):
+                root.val = leftmostOfRight(root.right)
+                root.right = self.deleteNode(root.right, root.val)
+            
+        return root
 
 def main():
     s = Solution()
