@@ -4,7 +4,12 @@ class Solution(object):
         leftSum = 0
         rightSum = sum(nums)
 
-        # need to implement
+        for idx, num in enumerate(nums):
+            rightSum -= num
+            if leftSum == rightSum:
+                pivotIndex = idx
+                break
+            leftSum += nums[idx]
 
         return pivotIndex
 
